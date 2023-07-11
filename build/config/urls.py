@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from chatbot import views
 
+# 슬래시 붙이기 - url 정규화
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('cinemabot/', views.index),
+
 ]
