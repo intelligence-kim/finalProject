@@ -1,0 +1,61 @@
+/* background style */
+body {
+    background-color: #141414;
+    background-image: url("../img/home_background.png");
+    background-repeat: no-repeat;
+        /* 이미지를 바둑판처럼 반복하지 말라는 뜻 */
+    background-position: center;
+    background-size: cover;
+        /* w:h 비율을 유지하고, 컨테이너의 크기를 초과하면 이미지의 일부만 표시 */
+    height: 88vh;
+}
+
+/* title style */
+.title {
+    vertical-align: middle;
+    padding-top: 10vh;
+    margin: 10vh auto;
+    display: block;
+    width: 70%
+}
+.title img {
+    max-width: 100%;
+    vertical-align: middle;
+
+}
+
+/* sub-title style */
+.sub-title {
+    color: #636363;
+    text-align: center;
+    font-family: NanumBarunGothic;
+    font-size: 5%;
+    font-weight: 600;
+}
+
+/* go chat button */
+.go-chat-button {
+    width: 60vw;
+    margin: 2vw auto;
+    position: relative;
+    max-width: 400px;
+}
+
+.go-chat-button img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.button-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    font-size: 4.5vw;
+    text-align: center;
+    font-family: NeoDunggeunmo Pro;
+    text-shadow: 0.4vw 0.4vw 0.2vw rgba(0, 0, 0, 0.25);
+    color: #EEE;
+    font-weight: 400;
+}
