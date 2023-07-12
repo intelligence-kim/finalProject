@@ -4,3 +4,4 @@ document
 .DS_Store
 data
 crwl
+build/config/__pycache__
