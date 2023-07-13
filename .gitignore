@@ -4,6 +4,6 @@ document
 .DS_Store
 data
 crwl
-build/config/__pycache__/
-build/chatbot/__pycache__/
+web/config/__pycache__/
+web/chatbot/__pycache__/
 *.pyc

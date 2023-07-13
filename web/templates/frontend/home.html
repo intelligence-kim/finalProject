@@ -1,15 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
     <div class=top>
         <div class="title">
-            <img src="img/title.png" alt="">
+            <img src="{% static 'img/title.png' %}" alt="">
         </div>
     </div>
     
@@ -19,7 +20,7 @@
         </div>
         <div class="go-chat-button">
             <div class="button-img">
-                <img src="img/go_chat_button.png" alt="">
+                <img src="{% static 'img/go_chat_button.png' %}" alt="">
             </div>
             <div class="button-text">
                 <p>자유롭게 작품 요청하기</p>
@@ -27,7 +28,7 @@
         </div>
         <div class="go-chat-button">
             <div class="button-img">
-                <img src="img/go_chat_button.png" alt="">
+                <img src="{% static 'img/go_chat_button.png' %}" alt="">
             </div>
             <div class="button-text">
                 <p>설문으로 취향 찾기</p>
@@ -35,7 +36,7 @@
         </div>
         <div class="go-chat-button">
             <div class="button-img">
-                <img src="img/go_chat_button.png" alt="">
+                <img src="{% static 'img/go_chat_button.png' %}" alt="">
             </div>
             <div class="button-text">
                 <p>지금 바로 추천받기</p>

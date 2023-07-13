@@ -75,5 +75,5 @@ body {
     text-shadow: 0.4vw 0.4vw 0.2vw rgba(0, 0, 0, 0.25);
     color: #EEE;
     font-weight: 400;
-    white-space: nowrap;
+    white-space: nowrap; /* 자동으로 엔터 안 되도록 */
 }
