@@ -9,11 +9,12 @@ body {
         /* w:h 비율을 유지하고, 컨테이너의 크기를 초과하면 이미지의 일부만 표시 */
     height: 100vh;
     overflow: hidden;
+    font-family: NeoDunggeunmo Pro;
 
 }
 
 .top {
-    margin-top: 10vh;
+    margin-top: 10vw;
     padding-left: 15%;
     padding-right: 15%;
 }
@@ -34,19 +35,20 @@ body {
 
 
 .middle {
-    margin-top: 10vh;
-    margin-bottom: 5vh;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
 }
 
 /* sub-title style */
 .sub-title {
     color: #636363;
     text-align: center;
-    font-family: NanumBarunGothic;
-    font-weight: 600;
-    margin-left: 15%;
-    margin-right: 15%;
-    width: 70vw;
+    font-weight: 400;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    width: 80vw;
+    font-size: clamp(0.5vw, 2.5vw, 3vw);
+    text-shadow: 0.2vw 0.2vw 0.1vw rgba(255, 255, 255, 0.25);
 }
 
 /* go chat button */
@@ -71,7 +73,6 @@ body {
     transform: translate(-50%, -50%);
     font-size: clamp(0.5em, 4.5vw, 2em);
     text-align: center;
-    font-family: NeoDunggeunmo Pro;
     text-shadow: 0.4vw 0.4vw 0.2vw rgba(0, 0, 0, 0.25);
     color: #EEE;
     font-weight: 400;
