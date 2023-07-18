@@ -8,52 +8,44 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <div class=header>
+    <div class=top>
         <div class="title">
             <img src="{% static 'img/title.png' %}" alt="">
         </div>
     </div>
     
-    <div class="main">
+    <div class="middle">
         <div class="sub-title">
             <p>세 가지의 메뉴를 통해 시네마 봇의 추천을 받아 보세요!</p>
         </div>
         <div class="go-chat-button">
-            <a href="{% url 'talk-button' %}">
-                <div class="button-img">
-                    <img src="{% static 'img/go_chat_button.png' %}" alt="">
-                </div>
-                <div class="button-text">
-                    <p>자유롭게 작품 요청하기</p>
-                </div>
-            </a>
+            <div class="button-img">
+                <img src="{% static 'img/go_chat_button.png' %}" alt="">
+            </div>
+            <div class="button-text">
+                <p>자유롭게 작품 요청하기</p>
+            </div>
         </div>
-        <div class="go-chat-button">
-            <a href="{% url 'survey-button' %}">
-                <div class="button-img">
-                    <img src="{% static 'img/go_chat_button.png' %}" alt="">
-                </div>
-                <div class="button-text">
-                    <p>설문으로 취향 찾기</p>
-                </div>
-            </a>
-        </div>
-        <div class="go-chat-button">
-            <a href="{% url 'suggest-button' %}">
-                <div class="button-img">
-                    <img src="{% static 'img/go_chat_button.png' %}" alt="">
-                </div>
-                <div class="button-text">
-                    <p>지금 바로 추천받기</p>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="footer">
         <div class="go-chat-button">
             <div class="button-img">
                 <img src="{% static 'img/go_chat_button.png' %}" alt="">
             </div>
+            <div class="button-text">
+                <p>설문으로 취향 찾기</p>
+            </div>
+        </div>
+        <div class="go-chat-button">
+            <div class="button-img">
+                <img src="{% static 'img/go_chat_button.png' %}" alt="">
+            </div>
+            <div class="button-text">
+                <p>지금 바로 추천받기</p>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div>
+            
         </div>
     </div>
 </body>
