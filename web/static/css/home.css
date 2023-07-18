@@ -8,13 +8,14 @@ body {
     background-size: cover;
         /* w:h 비율을 유지하고, 컨테이너의 크기를 초과하면 이미지의 일부만 표시 */
     height: 100vh;
-    overflow: hidden;
     font-family: NeoDunggeunmo Pro;
 
 }
 
-.top {
-    margin-top: 10vw;
+.header {
+    /*margin-top: 10vh;*/
+    margin-top: 10vh;
+    margin-bottom: 10vh;
     padding-left: 15%;
     padding-right: 15%;
 }
@@ -23,10 +24,12 @@ body {
     vertical-align: middle;
     /*padding-top: 10%;*/
     /*margin: 4vh auto;*/
-    width: 100%
+    width: 100% ;
+    max-height: 10vh ;
 }
 .title img {
     max-width: 100%;
+    max-height: 20vh;
     object-fit: contain;
     margin: auto;
     display: block;
@@ -34,30 +37,35 @@ body {
 }
 
 
-.middle {
-    margin-top: 5vw;
-    margin-bottom: 5vw;
+.main {
+    /*margin-top: 5vw;*/
+    margin-bottom: 15vh;
 }
 
 /* sub-title style */
 .sub-title {
-    color: #636363;
+    width: 80vw;
+    color: #9f9f9f;
     text-align: center;
-    font-weight: 400;
     margin-left: 10vw;
     margin-right: 10vw;
-    width: 80vw;
-    font-size: clamp(0.5vw, 2.5vw, 3vw);
+    font-weight: 400;
+    /*white-space: nowrap; 자동으로 엔터 안 되도록 */
+    font-size: clamp(0.1vh, 2.5vh, 3vh);
     text-shadow: 0.2vw 0.2vw 0.1vw rgba(255, 255, 255, 0.25);
 }
 
 /* go chat button */
 .go-chat-button {
     width: 60vw;
-    margin: 2vh auto;
     position: relative;
     max-width: 400px;
-
+    max-height: 8vh;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left:auto;
+    margin-right: auto;
+    padding: 1vh;
 }
 
 .go-chat-button img {
@@ -66,6 +74,7 @@ body {
 }
 
 .button-text {
+    /*display: block;*/
     position: absolute;
     top: 50%;
     left: 50%;
@@ -77,4 +86,8 @@ body {
     color: #EEE;
     font-weight: 400;
     white-space: nowrap; /* 자동으로 엔터 안 되도록 */
+}
+
+.footer {
+    width: 100%;
 }
