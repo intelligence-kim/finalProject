@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intro</title>
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+
+</head>
+
+<body>
+    <div class="chat-container">
+        <!-- 스크롤 부분 -->
+        <div class="message-container">
+            <div class="bot-bubble">
+                <img src="{% static 'img/bot_icon.png' %}" alt="">
+                <div class="message-bubble">
+                    <div class="message-text" style="text-align: left;">
+                        <p>안녕하세요! 시네마 봇입니다.</p>
+                        <p>MBTI만 선택해 주시면 좋아하실만한 영화를 추천해 드릴게요!</p>
+                        <p>나이대별 필터링은 입력창 위의 [영화 필터링] 옵션에서 설정 가능합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MBTI 선택 부분 -->
+            <div class="button-grid">
+                <button class="button" onclick="sendMBTI('ENTJ')">ENTJ</button>
+                <button class="button" onclick="sendMBTI('ENFJ')">ENFJ</button>
+                <button class="button" onclick="sendMBTI('ESTJ')">ESTJ</button>
+                <button class="button" onclick="sendMBTI('ESFJ')">ESFJ</button>
+
+                <button class="button" onclick="sendMBTI('ENTP')">ENTP</button>
+                <button class="button" onclick="sendMBTI('ENFP')">ENFP</button>
+                <button class="button" onclick="sendMBTI('ESTP')">ESTP</button>
+                <button class="button" onclick="sendMBTI('ESFP')">ESFP</button>
+
+                <button class="button" onclick="sendMBTI('INTJ')">INTJ</button>
+                <button class="button" onclick="sendMBTI('INFJ')">INFJ</button>
+                <button class="button" onclick="sendMBTI('ISTJ')">ISTJ</button>
+                <button class="button" onclick="sendMBTI('ISFJ')">ISFJ</button>
+
+                <button class="button" onclick="sendMBTI('INTP')">INTP</button>
+                <button class="button" onclick="sendMBTI('INFP')">INFP</button>
+                <button class="button" onclick="sendMBTI('ISTP')">ISTP</button>
+                <button class="button" onclick="sendMBTI('ISFP')">ISFP</button>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+            <!-- <div class="bot-bubble">
+                <img src="{% static 'img/bot_icon.png' %}" alt="">
+                <div class="message-bubble">
+                    <div class="message-text">추천해 드릴게요</div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+    <!-- 추가할 블록 내용 -->
+
+
+    <!-- 채팅 보내는 전송창 -->
+    <form id="chat-form" method="POST">
+        {% csrf_token %}
+        <input type="text" id="user-message" name="user_message" placeholder="MBTI를 먼저 선택해주세요." disabled />
+        <input type="hidden" name="conversation_id" value="{{ conversation_id }}" />
+        <button type="submit" id="submit-btn" disabled>전송</button>
+    </form>
+
+    <!-- JavaScript 코드 -->
+    <script>
+        const submitButton = document.querySelector("#submit-btn");            // 전송 버튼
+        const message = document.querySelector("#user-message");               // 채팅 메시지
+        const messageContainer = document.querySelector(".message-container"); // 메시지 컨테이너
+
+        submitButton.addEventListener("click", (event) => {
+            event.preventDefault(); // submit 되지 않도록 방지
+            // message.disabled = true;
+
+            // 1. 사용자 메시지에 대한 요소 생성 및 추가
+            messageContainer.appendChild(createMessageBubble(message.value));
+            messageContainer.appendChild(createBotMessageBubble());
+
+            // 2. 비동기 통신을 활용한 메시지를 서버로 전송
+
+            // 3. 비동기 통신으로 받아온 response에서 데이터(json)를 가져오기
+            requestBody = {
+                'message': message.value,
+                'conversation_id': document.getElementById("conversation_id").title,
+            };
+            postData("{% url 'message_rest_api' %}", requestBody).then((data) => {
+                // loading 메시지(..., 점 세 개) 삭제
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById("loading" + i).remove();
+                }
+
+                // 봇의 마지막 대화 쿼리에 reply 추가
+                botP = document.querySelectorAll(".bot-message-paragraph");
+                botP[botP.length - 1].innerText = data.reply;
+            });
+
+            // 4. 요소 생성
+
+
+            // 마지막으로 input value 값을 지우고 포커싱
+            message.value = '';
+            message.disabled = false;
+            message.focus();
+        });
+
+        // CSRF 토큰 가져오기
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        // Example POST method implementation:
+        async function postData(url = "{% url 'message_rest_api' %}", data = { "message": message }) {
+
+            // Default options are marked with *
+            const response = await fetch("{% url 'message_rest_api' %}", {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken, // CSRF 토큰 추가 - post 요청을 처리
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(data), // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+
+
+
+        // MBTI 버튼으로 데이터 전송하기
+        async function sendMBTI(mbti) {
+            // MBTI 버튼 비활성화
+            const buttons = document.querySelectorAll(".button");
+            let convId;
+            buttons.forEach(button => button.disabled = true);
+
+            // message 입력 필드에 placeholder 업데이트
+            const messageInput = document.querySelector("#user-message");
+            messageInput.placeholder = "메시지를 입력하세요.";
+
+            data = { "mbti": mbti }
+            // Default options are marked with *
+            const response = await fetch("{% url 'mbti_rest_api' %}", {
+                method: "POST",
+                // mode: "cors",
+                // cache: "no-cache",
+                // credentials: "same-origin",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Content-Type": "application/json",
+                },
+                // redirect: "follow",
+                // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                })
+                .then((json) => {
+                    convId = json.conv_id;
+                });
+
+            const convIdMBTI = `<span id="conversation_id" title="${convId}">${mbti}입니다.</span>`;
+            // messageContainer.appendChild(createMessageBubble(message));
+
+            const mbtiMessage = new Promise((resolve, reject) => {
+                messageContainer.appendChild(createMessageBubble(convIdMBTI))
+                const pathname = window.location.pathname;
+                resolve(pathname)
+            });
+
+            mbtiMessage.then((pathname) => {
+                // console.log(pathname);
+                // console.log(pathname === '/cinemabot/talk/');
+
+                if (pathname === '/cinemabot/talk/') {
+                    let botGreeting = {path: 'talk', greet : '자유롭게 말씀하신 뒤, 좌측 하단의 [추천] 버튼을 눌러 주시면 좋아하실 만한 작품을 추천해 드릴게요! 예시:"어쩌고저쩌고"' };
+                    return botGreeting
+
+                } else if (pathname === '/cinemabot/survey/') {
+                    let botGreeting = {path: 'survey', greet : '질문에 답변해 주시면 키워드를 분석해서 좋아하실 만한 작품을 추천해 드릴게요! 좌측 하단의 [추천] 버튼을 누르면 언제든지 설문을 그만두고 추천을 받을 수 있어요.'};
+                    return botGreeting
+
+                } else {
+                    let botGreeting = {path: 'suggest', greet : '모든 절차가 끝났습니다!'};
+                    //지금 바로 추천해 드릴게요 멘트는 suggest.html에서
+                    return botGreeting
+                }
+            }).then((botGreeting) => {
+                // console.log(botGreeting.path);
+                // mbti 선택 직후 봇 인사 메시지 보내기
+                messageContainer.appendChild(createBotMessageBubble(botGreeting.greet, isLoading = false));
+
+                if (botGreeting.path === 'survey') {
+                    // survey면 첫 질문 보내기
+                    let question = '질문';
+                    messageContainer.appendChild(createBotMessageBubble(question, isLoading=false));
+                }
+                    message.value = '';
+                    message.disabled = false;
+                    submitButton.disabled = false;
+                    message.focus();
+                });
+        }
+            // return true;
+
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+        // 채팅 스크롤 하단으로 보내기
+        function scrollToBottom() {
+            let messageContainer = document.getElementsByClassName('message-container');
+            messageContainer[0].scrollTo(0, messageContainer[0].scrollHeight);
+        }
+
+        document.getElementById('submit-btn').addEventListener('click', (event) => {
+            scrollToBottom();
+        });
+
+        window.onload = function () {
+            scrollToBottom();
+        };
+
+        // 새로운 메시지를 생성하는 함수
+        function createMessageBubble(message) {
+            // <div class="user-message-container"> 요소 생성
+            const userMessageContainer = document.createElement('div');
+            userMessageContainer.className = 'user-message-container';
+
+            // <div class="message-bubble"> 요소 생성
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+
+            // <div class="message-text"> 요소 생성
+            const messageTextDiv = document.createElement('div');
+            messageTextDiv.className = 'message-text';
+
+            // <p> 요소 생성
+            const messageParagraph = document.createElement('p');
+
+            messageParagraph.innerHTML = message;
+
+            // <p> 요소를 <div class="message-text"> 안에 추가
+            messageTextDiv.appendChild(messageParagraph);
+
+            // <div class="message-text"> 요소를 <div class="message-bubble"> 안에 추가
+            messageBubble.appendChild(messageTextDiv);
+
+            // <div class="message-bubble"> 요소를 <div class="user-message-container"> 안에 추가
+            userMessageContainer.appendChild(messageBubble);
+
+            // return new Promise((resolve, reject) => {
+            //     // 작업이 완료되면 resolve() 호출
+            //     resolve(userMessageContainer)
+            // });
+            return userMessageContainer;
+        }
+
+        // <div class="bot-bubble">
+        //     <img src="{% static 'img/bot_icon.png' %}" alt="">
+        //     <div class="message-bubble">
+        //         <div class="message-text">추천해 드릴게요</div>
+        //     </div>
+        // </div>
+        function createBotMessageBubble(text, isLoading=true) {
+            // <div class="bot-bubble"> 요소 생성
+            const botMessageBubble = document.createElement('div');
+            botMessageBubble.className = 'bot-bubble';
+
+            // <img src="{% static 'img/bot_icon.png' %}" alt="">
+            botImage = document.createElement('img');
+            botImage.src = "{% static 'img/bot_icon.png' %}";
+            botImage.alt = "";
+
+            // <div class="message-bubble"> 요소 생성
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+
+            // <div class="message-text"> 요소 생성
+            const messageTextDiv = document.createElement('div');
+            messageTextDiv.className = 'message-text';
+
+            // <p> 요소 생성
+            const messageParagraph = document.createElement('p');
+            messageParagraph.className = 'bot-message-paragraph';
+            messageParagraph.textContent = text;  // 메시지 내용 설정/////////////////
+
+            if (isLoading) {
+                for (var i = 1; i < 4; i++) {
+                    const dot = document.createElement('span');
+                    dot.id = 'loading' + i;
+                    dot.textContent = '.';
+                    messageParagraph.appendChild(dot);
+                }
+            }
+            
+            // <p> 요소를 <div class="message-text"> 안에 추가
+            messageTextDiv.appendChild(messageParagraph);
+
+            // <div class="message-bubble">
+            messageBubble.appendChild(messageTextDiv);
+
+            // <img src="{% static 'img/bot_icon.png' %}" alt=""> 요소를 <div class="bot-bubble"> 안에 추가
+            botMessageBubble.appendChild(botImage);
+
+            // <div class="message-text"> 요소를 <div class="bot-bubble"> 안에 추가
+            botMessageBubble.appendChild(messageBubble);
+            return botMessageBubble;
+        }
+
+    </script>
+
+</body>
+
+</html>

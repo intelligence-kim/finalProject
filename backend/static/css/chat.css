@@ -1,0 +1,141 @@
+@import url('reset.css');
+
+body {
+    background-color: #141414;
+    font-family: NeoDunggeunmo Pro;
+    overflow: hidden;
+
+}
+
+h1 {
+    position: fixed;
+    top: 0;
+    margin-bottom: 2vh;
+    padding: 2vh;
+}
+
+.chat-container {
+    position: relative;
+    top: 8vh;
+    height: 80vh;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.message-container {
+    /* 채팅 내용이 넘치면 스크롤이 표시되도록 함 */
+    overflow-y: auto;
+    width: 90vw;
+}
+
+.user-message-container {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    position: relative;
+}
+
+.message-bubble {
+    /* position: relative; */
+    width: fit-content;
+    max-width: 75%;
+    height: max-content;
+    margin: 1vh;
+    padding: 1vh;
+    background-color: #FEEEB3;
+    display: flex;
+    border: 0.5vh solid #FFB91F;
+    border-radius: 2vh;
+    /* align-items: flex-end; */
+}
+
+.message-text {
+    display: block;
+    position: relative;
+    font-size: clamp(0.5em, 3em, 1em);
+    text-align: left;
+    color: #352525;
+    font-weight: 200;
+    padding: 0.5vh;
+    width: fit-content;
+    height:max-content;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2vw;
+    margin: 2vh;
+    margin-left: auto;
+    margin-right: auto;
+    place-items: center;
+    max-width: 70vw;
+}
+
+.button {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    text-align: center;
+    background-color: #FFB91F;
+    border: 0.5vh solid #E17A2C;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    font-family: NeoDunggeunmo Pro;
+    font-weight: 400;
+    font-size: clamp(1.2em, 1em, 2.5em);
+    width: 14vw;
+}
+
+#chat-form {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5vh !important;
+    padding: 2vh;
+}
+
+.bot-bubble img {
+    height: 5vh;
+    float: left;
+    margin: 1vh;
+}
+
+#user-message {
+    padding: 2vw;
+    width: 40vw;
+}
+#submit-btn {
+    padding: 2vw;
+    width: 10vw;
+}
+
+#chat-form {
+    display: flex;
+    justify-content: center;
+}
+
+/* loading paragraph for bot chating */
+#loading1 {
+    animation: loading 1s infinite;
+}
+#loading2 {
+    animation: loading 1s infinite 0.2s;
+}
+#loading3 {
+    animation: loading 1s infinite 0.4s;
+}
+@keyframes loading {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
