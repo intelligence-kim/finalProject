@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from chatbot.views import hello_rest_api
+from chatbot.views import hello_rest_api, message_rest_api, mbti_rest_api
 #from django.chatbot.views import web_hook
 
 urlpatterns = [
@@ -12,5 +12,8 @@ urlpatterns = [
 
     #chatbot
     path('api/hello/', hello_rest_api, name='hello_rest_api'),
+    path('api/message/', message_rest_api, name='message_rest_api'),
+    path('api/mbti/', mbti_rest_api, name='mbti_rest_api'),
+    
 
 ]

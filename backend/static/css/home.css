@@ -9,7 +9,6 @@ body {
         /* w:h 비율을 유지하고, 컨테이너의 크기를 초과하면 이미지의 일부만 표시 */
     height: 100vh;
     font-family: NeoDunggeunmo Pro;
-
 }
 
 .header {
