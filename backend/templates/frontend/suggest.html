@@ -1,45 +1,42 @@
 {% extends 'intro.html' %}
 {% block content %}
 {% load static %}
+
 <head>
     <link rel="stylesheet" href="{% static 'css/recommend.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 </head>
 
 <body>
-    <div class="container">
+
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="carousel slide multi-item-carousel" id="theCarousel">
                     <div class="carousel-inner">
                         <div class="item active">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image1.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image1.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image5.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image5.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image4.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image4.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image3.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image3.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
                         <div class="item">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image2.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image2.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
                         <!-- add more items here -->
@@ -47,8 +44,7 @@
 
                         <div class="item">
                             <div class="col-xs-4">
-                                <a href="#1"><img src="{% static 'img/image1.jpg' %}"
-                                        class="img-responsive"></a>
+                                <a href="#1"><img src="{% static 'img/image1.jpg' %}" class="img-responsive"></a>
                             </div>
                         </div>
 
@@ -59,8 +55,8 @@
         </div>
     </div>
 
-  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
         <div class="carousel-inner">
@@ -93,7 +89,7 @@
     <!-- Bootstrap JS and jQuery scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 
 
     <!-- <div class="carousel-inner">
@@ -110,5 +106,16 @@
         </div>
         {% endfor %}
     </div> -->
+    <script>
+        sendMBTI(mbti).then((message) => {
+            let botGreeting = '모든 절차가 끝났습니다!'
+            messageContainer.appendChild(createBotMessageBubble(botGreeting, isLoading = false));
+
+        message.value = '';
+        message.disabled = false;
+        submitButton.disabled = false;
+        message.focus();
+        });
+    </script>
 </body>
 {% endblock %}

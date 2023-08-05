@@ -10,6 +10,9 @@ from rest_framework.permissions import AllowAny
 from .models import conversation,UserMessage, questions
 import json, random
 
+import pandas as pd
+import csv
+
 # Create your views here.
 
 # home.html
@@ -82,7 +85,7 @@ def message_rest_api(request):
         response_data = {
             'message': user_message,
             'conversation_id': conversation_id,
-            'reply': random.sample(survey_question(), 1),
+            'reply': random.sample(survey_question(3), 1),
             # 'reply': random.sample(["현재 기능 구현 중 입니다.", "신속하게 제작하겠습니다.", "이용해주셔서 감사합니다."], 1),
         }
         # print(response_data.reply)
@@ -95,16 +98,78 @@ def message_rest_api(request):
     else:
         return JsonResponse({'error': 'Invalid request method'})
     
+
 # 설문 질문 DB에서 불러와서 랜덤으로 하나 return
-def survey_question():
-    nums = random.sample(range(1, 156), 3) # question 행 개수 중 3개 랜덤으로 뽑음
+# def survey_question():
+#     nums = random.sample(range(1, 156), 3) # question 행 개수 중 3개 랜덤으로 뽑음
+#     question_list = []
+#     for i in nums:
+#         queryset = questions.objects.values().filter(id = i)
+#         text = queryset[0]['question']
+#         question_list.append(text)
+#     # print(question_list)
+#     return question_list
+
+@csrf_exempt
+def question_rest_api(request):
+    if request.method == 'POST':
+        # 클라이언트에서 전달한 conversation_id, message 가져옴
+        try:
+            json_data = json.loads(request.body)
+            user_message = json_data.get('message')
+            conversation_id = json_data.get('conversation_id')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data.'}, status=400)
+
+        # 챗봇 응답 처리 부분
+        # 핑퐁핑퐁 하는 거라서 survey에 사용
+        response_data = {
+            'message': user_message,
+            'conversation_id': conversation_id,
+            'reply': random.sample(survey_question(), 1),
+            # 'reply': random.sample(["현재 기능 구현 중 입니다.", "신속하게 제작하겠습니다.", "이용해주셔서 감사합니다."], 1),
+        }
+        # print(response_data.reply)
+
+        # 사용자의 메시지를 모델에 저장
+        conv_obj = conversation.objects.get(id=conversation_id)
+        UserMessage.objects.create(message=user_message, conv_id=conv_obj)
+
+        return JsonResponse(response_data)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+def question_rest_api(request):
+    if request.method == 'POST':
+        # num 받아 옴
+        try:
+            json_data = json.loads(request.body)
+            num = json_data.get('num')
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data.'}, status=400)
+        
+        # num 개수만큼 딕셔너리 형태로 질문 반환
+        # chat-gpt API 처리 함수
+        result = survey_question(num)
+        print(result)
+        return JsonResponse(result)
+    else:
+        return JsonResponse({'error': 'Invalid request method'})
+
+# 재승 님: chat-gpt API 처리 함수
+survey_df = pd.read_csv('./csv/survey.csv',index_col=0)
+def survey_question(num):
     question_list = []
-    for i in nums:
-        queryset = questions.objects.values().filter(id = i)
-        text = queryset[0]['question']
-        question_list.append(text)
-    # print(question_list)
-    return question_list
+    category = list(set(survey_df['mbti topic']))
+    for i in range(num):
+        survey_num = len(category) # 설문 총 개수(중복제외)
+        select_num = random.randint(0,survey_num-1) # 설문 총 개수가 5라면 0-4까지 뽑음
+        # category[select_num]은 카테고리 값
+        question_list.append(
+        survey_df[survey_df['mbti topic']==category[select_num]].\
+        iloc[random.randint(0,len(survey_df[survey_df['mbti topic']==category[select_num]]))-1]['질문'])
+        category.remove(category[select_num])
+    return {'question_list':question_list}
     
 
 # rest api

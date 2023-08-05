@@ -89,6 +89,20 @@ h1 {
     width: 14vw;
 }
 
+.num-button {
+    margin: 0.5vw;
+    margin-right: 3vw;
+    width: 13vw;
+    padding-top: 1.2vh;
+    padding-bottom: 1.2vh;
+    background-color: #fff8e8;
+    border: 0.5vh solid #c85922;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    font-family: NeoDunggeunmo Pro;
+    font-size: clamp(1.2em, 1em, 2.5em);
+}
+
 #chat-form {
     position: fixed;
     bottom: 0;

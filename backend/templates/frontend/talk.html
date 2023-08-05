@@ -1,5 +1,15 @@
 {% extends 'intro.html' %}
 {% block content %}
 {% load static %}
-    <h1> 대화하기</h1>
+<script>
+    sendMBTI(mbti).then((message) => {
+        let botGreeting = '자유롭게 말씀하신 뒤, 좌측 하단의 [추천] 버튼을 눌러 주시면 좋아하실 만한 작품을 추천해 드릴게요! 예시:"어쩌고저쩌고"'
+        messageContainer.appendChild(createBotMessageBubble(botGreeting, isLoading = false));
+
+        message.value = '';
+        message.disabled = false;
+        submitButton.disabled = false;
+        message.focus();
+    });
+</script>
 {% endblock %}

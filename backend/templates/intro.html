@@ -86,6 +86,7 @@
             messageContainer.appendChild(createMessageBubble(message.value));
             messageContainer.appendChild(createBotMessageBubble());
 
+
             // 2. 비동기 통신을 활용한 메시지를 서버로 전송
 
             // 3. 비동기 통신으로 받아온 response에서 데이터(json)를 가져오기
@@ -99,18 +100,17 @@
                     document.getElementById("loading" + i).remove();
                 }
 
-                // 봇의 마지막 대화 쿼리에 reply 추가
+                // 봇의 마지막 대화 쿼리에 reply 추가\
                 botP = document.querySelectorAll(".bot-message-paragraph");
                 botP[botP.length - 1].innerText = data.reply;
             });
 
             // 4. 요소 생성
 
-
-            // 마지막으로 input value 값을 지우고 포커싱
-            message.value = '';
-            message.disabled = false;
-            message.focus();
+            // // 마지막으로 input value 값을 지우고 포커싱
+            // message.value = '';
+            // message.disabled = false;
+            // message.focus();
         });
 
         // CSRF 토큰 가져오기
@@ -170,48 +170,60 @@
                 });
 
             const convIdMBTI = `<span id="conversation_id" title="${convId}">${mbti}입니다.</span>`;
-            // messageContainer.appendChild(createMessageBubble(message));
+            messageContainer.appendChild(createMessageBubble(convIdMBTI));
 
-            const mbtiMessage = new Promise((resolve, reject) => {
-                messageContainer.appendChild(createMessageBubble(convIdMBTI))
-                const pathname = window.location.pathname;
-                resolve(pathname)
-            });
+            const pathname = window.location.pathname;
+            console.log(pathname);
+            if (pathname === '/cinemabot/survey/') {
+                let greet1 = '질문에 답변해 주시면 키워드를 분석해서 좋아하실 만한 작품을 추천해 드릴게요!'
+                let greet2 = '몇 개의 질문에 답 하실지 버튼으로 선택해 주세요.'
+                messageContainer.appendChild(createBotMessageBubble(greet1, isLoading = false))
+                messageContainer.appendChild(createBotMessageBubble(greet2, isLoading = false))
 
-            mbtiMessage.then((pathname) => {
-                // console.log(pathname);
-                // console.log(pathname === '/cinemabot/talk/');
+                // Custom Event를 발생시킵니다.
+                const event = new CustomEvent('MBTICompleted');
+                document.dispatchEvent(event);
+                return;
 
-                if (pathname === '/cinemabot/talk/') {
-                    let botGreeting = {path: 'talk', greet : '자유롭게 말씀하신 뒤, 좌측 하단의 [추천] 버튼을 눌러 주시면 좋아하실 만한 작품을 추천해 드릴게요! 예시:"어쩌고저쩌고"' };
-                    return botGreeting
-
-                } else if (pathname === '/cinemabot/survey/') {
-                    let botGreeting = {path: 'survey', greet : '질문에 답변해 주시면 키워드를 분석해서 좋아하실 만한 작품을 추천해 드릴게요! 좌측 하단의 [추천] 버튼을 누르면 언제든지 설문을 그만두고 추천을 받을 수 있어요.'};
-                    return botGreeting
-
-                } else {
-                    let botGreeting = {path: 'suggest', greet : '모든 절차가 끝났습니다!'};
-                    //지금 바로 추천해 드릴게요 멘트는 suggest.html에서
-                    return botGreeting
-                }
-            }).then((botGreeting) => {
-                // console.log(botGreeting.path);
-                // mbti 선택 직후 봇 인사 메시지 보내기
-                messageContainer.appendChild(createBotMessageBubble(botGreeting.greet, isLoading = false));
-
-                if (botGreeting.path === 'survey') {
-                    // survey면 첫 질문 보내기
-                    let question = '질문';
-                    messageContainer.appendChild(createBotMessageBubble(question, isLoading=false));
-                }
-                    message.value = '';
-                    message.disabled = false;
-                    submitButton.disabled = false;
-                    message.focus();
-                });
+            } else {
+                let botGreeting = { path: 'suggest', greet: '모든 절차가 끝났습니다!' };
+                messageContainer.appendChild(createBotMessageBubble(botGreeting));
+                return;
+            }
         }
-            // return true;
+
+
+
+        //     if (pathname === '/cinemabot/talk/') {
+        //         let botGreeting = { path: 'talk', greet: '자유롭게 말씀하신 뒤, 좌측 하단의 [추천] 버튼을 눌러 주시면 좋아하실 만한 작품을 추천해 드릴게요! 예시:"어쩌고저쩌고"' };
+        //         return botGreeting
+
+        //     } else if (pathname === '/cinemabot/survey/') {
+        //         let botGreeting = { path: 'survey', greet: '질문에 답변해 주시면 키워드를 분석해서 좋아하실 만한 작품을 추천해 드릴게요! 좌측 하단의 [추천] 버튼을 누르면 언제든지 설문을 그만두고 추천을 받을 수 있어요.' };
+        //         return botGreeting
+
+        //     } else {
+        //         let botGreeting = { path: 'suggest', greet: '모든 절차가 끝났습니다!' };
+        //         //지금 바로 추천해 드릴게요 멘트는 suggest.html에서
+        //         return botGreeting
+        //     }
+        // }).then((botGreeting) => {
+        //     // console.log(botGreeting.path);
+        //     // mbti 선택 직후 봇 인사 메시지 보내기
+        //     messageContainer.appendChild(createBotMessageBubble(botGreeting.greet, isLoading = false));
+
+        //     if (botGreeting.path === 'survey') {
+        //         // survey면 첫 질문 보내기
+        //         let question = '질문';
+        //         messageContainer.appendChild(createBotMessageBubble(question));
+        //     }
+        //     message.value = '';
+        //     message.disabled = false;
+        //     submitButton.disabled = false;
+        //     message.focus();
+        // });
+
+        // return true;
 
 
         function getCookie(name) {
@@ -286,7 +298,7 @@
         //         <div class="message-text">추천해 드릴게요</div>
         //     </div>
         // </div>
-        function createBotMessageBubble(text, isLoading=true) {
+        function createBotMessageBubble(text, isLoading = true) {
             // <div class="bot-bubble"> 요소 생성
             const botMessageBubble = document.createElement('div');
             botMessageBubble.className = 'bot-bubble';
@@ -317,7 +329,7 @@
                     messageParagraph.appendChild(dot);
                 }
             }
-            
+
             // <p> 요소를 <div class="message-text"> 안에 추가
             messageTextDiv.appendChild(messageParagraph);
 

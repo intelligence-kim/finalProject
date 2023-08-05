@@ -22,8 +22,9 @@ class UserMessage(models.Model):
     
 class questions(models.Model):
     id = models.AutoField(primary_key=True)
-    category = models.CharField(max_length=20)
+    category = models.CharField(max_length=30)
     question = models.CharField(max_length=100)
+    topic = models.CharField(max_length=20, default='')
 
     def __str__(self):
         return self.question

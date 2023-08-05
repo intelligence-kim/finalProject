@@ -1,5 +1,124 @@
 {% extends 'intro.html' %}
 {% block content %}
 {% load static %}
-    <h1> 설문하기</h1>
+
+</div>
+<script>
+    // 이벤트 리스너를 추가하여 Custom Event 수신 후 sendNum 함수를 실행합니다.
+    document.addEventListener('MBTICompleted', () => {
+        function createButtons() {
+            // 버튼 생성 함수
+            function addButton(text, num) {
+                const button = document.createElement("button");
+                button.textContent = text + "개";
+                button.classList.add("num-button");
+                button.onclick = function () {
+                    sendNum(num);
+                };
+                messageContainer.appendChild(button);
+            }
+
+            // 버튼들 생성
+            addButton("1", 1);
+            addButton("2", 2);
+            addButton("3", 3);
+        }
+
+        createButtons();
+        //////////////////////////////////////////////////////////////////////
+        // 개수 선택 버튼으로 개수 전송, 질문 반환하는 function
+        async function sendNum(num) {
+            // num 버튼 비활성화
+            const numButtons = document.querySelectorAll(".num-button");
+            numButtons.forEach(button => button.disabled = true);
+
+            // message 입력 필드에 placeholder 업데이트
+            const messageInput = document.querySelector("#user-message");
+            messageInput.placeholder = "메시지를 입력하세요.";
+
+            // num만 보내고 question만 받을 예정
+            data = { "num": num }
+
+            // Default options are marked with *
+            const questions = await fetch("{% url 'question_rest_api' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+                .then((questions) => {
+                    console.log(questions);
+                    if (questions.status === 200) {
+                        return questions.json();
+                    }
+                });
+
+            const numMessage = `${num}개`;
+            const numQuestion = `${num}개의 질문을 시작할게요.`;
+            messageContainer.appendChild(createMessageBubble(numMessage));
+            messageContainer.appendChild(createBotMessageBubble(numQuestion, isLoading = false));
+
+            // 통신으로 질문 받기
+            // console.log(response.question_list);
+            // 질문 bubble 띄우기
+            for (let i = 0; i < num; i++) {
+                messageContainer.appendChild(createBotMessageBubble(questions.question_list[i], false));
+            }
+            // 사용자 message 입력창 disabled=false 하기
+            // message.value = '';
+            submitButton.disabled = false;
+            message.disabled = false;
+            message.focus();
+            // 무지성 공감 버블
+
+
+            const response = await fetch("{% url 'question_rest_api' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status === 200) {
+                        return response.json();
+                    }
+                });
+            // 질문 bubble 띄우기(반복)
+        }
+    });
+
+// 입력값 없으면 전송키 disabled 하기
+            // // 빈 값이면 disabled = true;
+            // if (message.value === "") {
+            //     // 입력값이 비어있는 경우
+            //     submitButton.disabled = true;
+            // } else {
+            //     // 입력값이 있는 경우
+            //     submitButton.disabled = false;
+            //     ////////////////////////////////////////////////////왜안되지
+            // }
+
+
+
+</script>
+<!-- <script>
+    sendMBTI(mbti).then((mbti) => {
+        console.log(mbti);
+        let botGreeting = '질문에 답변해 주시면 키워드를 분석해서 좋아하실 만한 작품을 추천해 드릴게요! 좌측 하단의 [추천] 버튼을 누르면 언제든지 설문을 그만두고 추천을 받을 수 있어요.'
+        let question = '질문';
+        messageContainer.appendChild(createBotMessageBubble(botGreeting, isLoading = false));
+        messageContainer.appendChild(createBotMessageBubble(question, isLoading=false));
+
+
+    message.value = '';
+    message.disabled = false;
+    submitButton.disabled = false;
+    message.focus();
+    });
+</script> -->
 {% endblock %}
