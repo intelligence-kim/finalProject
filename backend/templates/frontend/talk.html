@@ -11,5 +11,110 @@
         submitButton.disabled = false;
         message.focus();
     });
+
+
+    // 망한 캐러셀 백업
+    // function showResults(recommends) {
+
+    //     // 부모 요소인 carousel-container class 생성
+    //     const carouselContainer = document.createElement('div');
+    //     carouselContainer.className = 'carousel-container';
+
+    //     // 내부 요소인 carousel 생성
+    //     const carousel = document.createElement('div');
+    //     carouselContainer.className = 'carousel';
+
+    //     for (let i = 0; i < 5; i++) {
+    //         const nfid = JSON.stringify(recommends.nfid[i]);
+    //         const title = JSON.stringify(recommends.title[i]);
+    //         const synopsis = JSON.stringify(recommends.synopsis[i]);
+    //         const review_key1 = JSON.stringify(recommends.review_key1[i]);
+    //         const review_key2 = JSON.stringify(recommends.review_key2[i]);
+    //         const review_key3 = JSON.stringify(recommends.review_key3[i]);
+    //         const movie_poster = recommends.movie_poster[i];
+
+    //         // 이미지 요소 생성 (첫번째에만 active 추가)
+    //         const imageDiv = document.createElement('div');
+    //         imageDiv.classList.add('carousel-item');
+
+    //         // <a> 태그 생성
+    //         const link = document.createElement('a');
+    //         link.href = `https://www.netflix.com/kr/title/${nfid}`;
+
+    //         // 이미지 요소 생성(2)
+    //         const image = document.createElement('img');
+    //         image.src = movie_poster;
+    //         image.classList.add('d-block', 'w-100');
+    //         image.alt = "...";
+
+    //         // 텍스트 요소 생성
+    //         const textDiv = document.createElement('div');
+    //         textDiv.classList.add('carousel-text');
+    //         const subject = document.createElement('h5');
+    //         subject.textContent = title;
+    //         const tags = document.createElement('p');
+    //         tags.textContent = `#${review_key1} #${review_key2} #${review_key3}`;
+    //         const description = document.createElement('p');
+    //         description.classList.add('small-text');
+    //         description.textContent = synopsis;
+    //         textDiv.appendChild(subject);
+    //         textDiv.appendChild(tags);
+    //         textDiv.appendChild(description);
+
+    //         // 이미지를 <a> 태그 내부로 추가
+    //         link.appendChild(image);
+    //         imageDiv.appendChild(link);
+
+    //         // carousel-inner를 carousel-outer의 자식으로 추가
+    //         imageDiv.appendChild(createBotMessageBubble(textDiv.textContent));
+    //         carouselInner.appendChild(imageDiv);
+    //         carouselOuter.appendChild(carouselInner);
+
+    //         // messageContainer에 추가
+    //         messageContainer.appendChild(carouselOuter);
+    //     };
+
+    //     // 이동 버튼
+    //     // Previous 버튼 생성
+    //     const prevButton = document.createElement('button');
+    //     prevButton.classList.add('carousel-control-prev');
+    //     prevButton.type = 'button';
+    //     prevButton.dataset.bsTarget = '#movie-carousel';
+    //     prevButton.dataset.bsSlide = 'prev';
+
+    //     const prevIcon = document.createElement('span');
+    //     prevIcon.classList.add('carousel-control-prev-icon');
+    //     prevIcon.setAttribute('aria-hidden', 'true');
+
+    //     const prevText = document.createElement('span');
+    //     prevText.classList.add('visually-hidden');
+    //     prevText.textContent = 'Previous';
+
+    //     prevButton.appendChild(prevIcon);
+    //     prevButton.appendChild(prevText);
+
+    //     // Next 버튼 생성
+    //     const nextButton = document.createElement('button');
+    //     nextButton.classList.add('carousel-control-next');
+    //     nextButton.type = 'button';
+    //     nextButton.dataset.bsTarget = '#movie-carousel';
+    //     nextButton.dataset.bsSlide = 'next';
+
+    //     const nextIcon = document.createElement('span');
+    //     nextIcon.classList.add('carousel-control-next-icon');
+    //     nextIcon.setAttribute('aria-hidden', 'true');
+
+    //     const nextText = document.createElement('span');
+    //     nextText.classList.add('visually-hidden');
+    //     nextText.textContent = 'Next';
+
+    //     nextButton.appendChild(nextIcon);
+    //     nextButton.appendChild(nextText);
+
+    //     // 버튼들을 부모 요소에 추가
+    //     carouselOuter.appendChild(prevButton);
+    //     carouselOuter.appendChild(nextButton);
+
+    // }
 </script>
 {% endblock %}

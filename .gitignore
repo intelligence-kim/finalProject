@@ -7,3 +7,6 @@ crwl
 web/config/__pycache__/
 web/chatbot/__pycache__/
 *.pyc
+backend/csv
+backend/erd
+backend/secrets.json

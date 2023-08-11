@@ -1,30 +1,28 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-
 <body>
     <div class=header>
         <div class="title">
             <img src="{% static 'img/title.png' %}" alt="">
         </div>
     </div>
-
+    
     <div class="main">
         <div class="sub-title">
-            <p>원하는 버튼을 클릭하고,</p>
-            <p>시네마 봇의 넷플릭스 작품 추천을 받아 보세요!</p>
+            <p>세 가지의 메뉴를 통해 시네마 봇의 추천을 받아 보세요!</p>
         </div>
-        <!-- <div class="go-chat-button">
-            <a href="{% url 'talk-button' %}">
+        <div class="go-chat-button">
+            <a> 
                 <div class="button-img">
                     <img src="{% static 'img/go_chat_button.png' %}" alt="">
                 </div>
@@ -32,9 +30,9 @@
                     <p>자유롭게 작품 요청하기</p>
                 </div>
             </a>
-        </div> -->
+        </div>
         <div class="go-chat-button">
-            <a href="{% url 'survey-button' %}">
+            <a>
                 <div class="button-img">
                     <img src="{% static 'img/go_chat_button.png' %}" alt="">
                 </div>
@@ -54,14 +52,22 @@
             </a>
         </div>
     </div>
+    
     <div class="footer">
         <div class="center-container">
+            <!-- <button class="image-button" data-toggle="tooltip" data-placement="bottom" title="팀원소개&#10;김지성:추천, 모델링, EDA, 데이터수집&#10;노재승:추천, EDA, 전처리&#10;강예림:모델링, 프론트, 데이터수집&#10;이주현:데이터수집, 프론트, 백 ,DB, UI&#10;윤영주:데이터수집, 하청업체(여러일)">
+                <img src="{% static 'img/person circle.png' %}" alt="">
+            </button> -->
             <button type="button" class="btn btn-primary transparent-btn" data-toggle="modal" data-target="#exampleModalName">
                 <img src="{% static 'img/person circle.png' %}" alt="">
             </button>
+            <!-- <button class="image-button" data-toggle="tooltip" data-placement="bottom" title="사용방법">
+                <img src="{% static 'img/question mark.png' %}" alt="">
+            </button> -->
             <button type="button" class="btn btn-primary transparent-btn" data-toggle="modal" data-target="#exampleModalCenter">
                 <img src="{% static 'img/question mark.png' %}" alt="">
             </button>
+
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -69,7 +75,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">사용방법</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -87,6 +93,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                         </div>
                     </div>
                 </div>
@@ -98,7 +105,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">사용방법</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -112,16 +119,24 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Include Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
 
+
+    <script>
+        function buttonClicked() {
+            // 버튼 클릭 이벤트에 대한 동작을 추가할 수 있습니다.
+        }
+    </script>
+</body>
 </html>

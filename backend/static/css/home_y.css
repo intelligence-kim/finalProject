@@ -1,5 +1,4 @@
 @import url('reset.css');
-
 /* background style */
 body {
     background-color: #141414;
@@ -37,7 +36,6 @@ body {
 
 }
 
-
 .main {
     /*margin-top: 5vw;*/
     margin-bottom: 15vh;
@@ -59,37 +57,35 @@ body {
 /* go chat button */
 .go-chat-button {
     width: 60vw;
-    position: static;
+    position: relative;
     max-width: 400px;
     max-height: 8vh;
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    /* margin-left:auto; */
-    /* margin-right: auto; */
-    /* padding: 1vh; */
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    margin-left:auto;
+    margin-right: auto;
+    padding: 1vh;
 }
 
 .go-chat-button img {
     width: 100%;
-    margin-block-end: 2vh;
-    /* vertical-align: middle; */
+    vertical-align: middle;
 }
 
 .button-text {
-    display: block;
-    position: relative;
-    top: -7.5vh;
+    /*display: block;*/
+    position: absolute;
+    top: 50%;
     left: 50%;
     width: 100%;
     transform: translate(-50%, -50%);
-    font-size: clamp(1.5em, 5.5vw, 2em);
+    font-size: clamp(0.5em, 4.5vw, 2em);
     text-align: center;
     text-shadow: 0.4vw 0.4vw 0.2vw rgba(0, 0, 0, 0.25);
     color: #EEE;
     font-weight: 400;
     white-space: nowrap; /* 자동으로 엔터 안 되도록 */
 }
-
 
 .footer {
     display: flex;
@@ -98,6 +94,7 @@ body {
     height: 10vh;
 }
 
+
 .image-button {
     display: inline-block;
     background-color: transparent;
@@ -105,6 +102,7 @@ body {
     cursor: pointer;
     border-radius: 10vh; /* 테두리를 둥글게 만듭니다 */
 }
+
 .image-button img {
     display: block;
 }

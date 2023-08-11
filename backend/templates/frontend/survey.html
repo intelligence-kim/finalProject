@@ -4,93 +4,163 @@
 
 </div>
 <script>
+    let questions = [];
+    let count = 0;
+    // 버튼 클릭 시 sendNum으로 개수(num) 전송
+    // num만큼 질문 - 사용자 응답 - ChatGPT API를 활용한 공감 챗 전송
+    async function sendNum(num) {
+        // 1. 버튼 클릭했으므로 버튼 비활성화
+        const numButtons = document.querySelectorAll(".num-button");
+        numButtons.forEach(button => button.disabled = true);
+
+        // 2. 선택한 개수 HTML 상에 말풍선 띄움
+        const numMessage = `${num}개`;
+        const numQuestion = `${num}개의 질문을 시작할게요.`;
+        messageContainer.appendChild(createMessageBubble(numMessage));
+        messageContainer.appendChild(createBotMessageBubble(numQuestion, false));
+
+        // 3. message 입력 필드에 placeholder 업데이트
+        const messageInput = document.querySelector("#user-message");
+        messageInput.placeholder = "메시지를 입력하세요.";
+    }
+
+    function createButtons() {
+        // <div class="num-buttons"> 요소 생성
+        const numButtons = document.createElement('div');
+        numButtons.className = 'num-buttons';
+        numButtons.style.marginLeft = '8vw';
+
+        // 질문 개수 선택 버튼 생성 함수
+        function addButton(text, num) {
+            const button = document.createElement("button");
+            button.textContent = text + "개";
+            button.classList.add("num-button");
+            button.onclick = function () {
+                sendNum(num);
+                count = num;
+                getQuestion();
+            };
+
+            // <div class="num-buttons">
+            numButtons.appendChild(button);
+            messageContainer.appendChild(numButtons);
+        }
+
+        // 버튼들 생성
+        addButton("1", 1);
+        addButton("2", 2);
+        addButton("3", 3);
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    // 질문 반환하는 function
+    async function getQuestion() {
+        // 1. question_rest_api로 질문 받아 오기
+        const question = await fetch("{% url 'question_rest_api' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "Content-Type": "application/json",
+            },
+        }).then(question => question.json()) // parses JSON response into native JavaScript objects
+            .then((data) => {
+                // 받아온 질문 create bubble
+                messageContainer.appendChild(createBotMessageBubble(data.question_text, false));
+
+                // 사용자가 입력 및 전송 가능하게 열기
+                submitAble();
+
+                questions.push(data);
+                return data; // JSON 반환
+            });
+
+        // 2. return값 question HTML 상에 뿌리기
+
+    }
+
+    // 메시지 보내기
+    async function postData(url = "{% url 'message_rest_api' %}", requestBody) {
+        const response = await fetch("{% url 'message_rest_api' %}", {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken, // CSRF 토큰 추가 - post 요청을 처리
+            },
+            body: JSON.stringify(requestBody),
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+    }
+
     // 이벤트 리스너를 추가하여 Custom Event 수신 후 sendNum 함수를 실행합니다.
     document.addEventListener('MBTICompleted', () => {
-        function createButtons() {
-            // 버튼 생성 함수
-            function addButton(text, num) {
-                const button = document.createElement("button");
-                button.textContent = text + "개";
-                button.classList.add("num-button");
-                button.onclick = function () {
-                    sendNum(num);
-                };
-                messageContainer.appendChild(button);
-            }
+        event.preventDefault(); // submit 되지 않도록 방지
 
-            // 버튼들 생성
-            addButton("1", 1);
-            addButton("2", 2);
-            addButton("3", 3);
-        }
-
+        // 버튼 생성
         createButtons();
-        //////////////////////////////////////////////////////////////////////
-        // 개수 선택 버튼으로 개수 전송, 질문 반환하는 function
-        async function sendNum(num) {
-            // num 버튼 비활성화
-            const numButtons = document.querySelectorAll(".num-button");
-            numButtons.forEach(button => button.disabled = true);
 
-            // message 입력 필드에 placeholder 업데이트
-            const messageInput = document.querySelector("#user-message");
-            messageInput.placeholder = "메시지를 입력하세요.";
+        // 메시지 전송 버튼 클릭 시 작동
+        submitButton.addEventListener("click", (event) => {
+            event.preventDefault(); // submit 되지 않도록 방지
 
-            // num만 보내고 question만 받을 예정
-            data = { "num": num }
+            // 1. 사용자 메시지에 대한 요소 생성 및 추가
+            messageContainer.appendChild(createMessageBubble(message.value));
+            messageContainer.appendChild(createBotMessageBubble()); // 봇 ... 생성
 
-            // Default options are marked with *
-            const questions = await fetch("{% url 'question_rest_api' %}", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-                .then((questions) => {
-                    console.log(questions);
-                    if (questions.status === 200) {
-                        return questions.json();
-                    }
-                });
+            // 2. 비동기 통신을 활용한 메시지를 서버로 전송
+            //    통신 중에 메시지 입력 금지 => 질문 후에 입력 가능하게 열기
+            //    응답을 위해 question도 같이 보냄
+            const messageValue = message.value;
+            submitDisable();
 
-            const numMessage = `${num}개`;
-            const numQuestion = `${num}개의 질문을 시작할게요.`;
-            messageContainer.appendChild(createMessageBubble(numMessage));
-            messageContainer.appendChild(createBotMessageBubble(numQuestion, isLoading = false));
+            lastQuestion = questions[questions.length - 1];
+            const requestBody = {
+                'message': messageValue,
+                'conversation_id': document.getElementById("conversation_id").title,
+                'question_text': lastQuestion.question_text,
+                'question_num': lastQuestion.question_num,
+                'drop_index': lastQuestion.cat_survey_index
+            };
 
-            // 통신으로 질문 받기
-            // console.log(response.question_list);
-            // 질문 bubble 띄우기
-            for (let i = 0; i < num; i++) {
-                messageContainer.appendChild(createBotMessageBubble(questions.question_list[i], false));
-            }
-            // 사용자 message 입력창 disabled=false 하기
-            // message.value = '';
-            submitButton.disabled = false;
-            message.disabled = false;
-            message.focus();
-            // 무지성 공감 버블
+            // 3. 비동기 통신으로 받아온 response에서 데이터(json)를 가져오기
+            postData("{% url 'message_rest_api' %}", requestBody).then((data) => {
+                // loading 메시지(..., 점 세 개) 삭제
+                for (let i = 1; i <= 3; i++) {
+                    document.getElementById("loading" + i).remove();
+                }
+
+                // 봇의 마지막 대화 쿼리에 reply 추가
+                botP = document.querySelectorAll(".bot-message-paragraph");
+                botP[botP.length - 1].innerText = data.reply;
+
+                
+                if (count > 1) {
+                    count = count - 1;
+                    // 아직 질문 개수가 남았을 때
+                    // 1. 질문을 한다.
+                    getQuestion();
+
+                    // 받아온 질문 create bubble
+                    // messageContainer.appendChild(createBotMessageBubble(questions[questions.length - 1].question_text, false));
 
 
-            const response = await fetch("{% url 'question_rest_api' %}", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-                .then((response) => {
-                    console.log(response);
-                    if (response.status === 200) {
-                        return response.json();
-                    }
-                });
-            // 질문 bubble 띄우기(반복)
-        }
+                    // 사용자가 입력 및 전송 가능하게 열기
+                    submitAble()
+
+                    // 2. 메시지 창을 연다.
+                } else {
+                    // 질문 개수가 남지 않았을 때 추천 결과를 보여준다.
+                    let botFinalText = '이제 추천 결과를 보여 드릴게요!'
+                    messageContainer.appendChild(createBotMessageBubble(botFinalText, false));
+
+                    messageContainer.appendChild(createBotMessageBubble('', true));
+
+                    const suggestTime = new CustomEvent('suggestTime');
+                    document.dispatchEvent(suggestTime);
+                }
+            });
+        })
     });
+
 
 // 입력값 없으면 전송키 disabled 하기
             // // 빈 값이면 disabled = true;

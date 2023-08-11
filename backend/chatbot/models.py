@@ -12,8 +12,8 @@ class conversation(models.Model):
     
 class UserMessage(models.Model):
     id = models.AutoField(primary_key=True)
-    message = models.CharField(max_length=200)
-    #mbti = models.CharField(max_length=4)
+    message = models.CharField(max_length=500)
+    keyword = models.CharField(max_length=50, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     conv_id = models.ForeignKey('conversation', on_delete=models.CASCADE, db_column='conv_id')
 
