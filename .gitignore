@@ -1,0 +1,12 @@
+flat-collection-of-colorful-cinema-items
+example_code
+document
+.DS_Store
+data
+crwl
+web/config/__pycache__/
+web/chatbot/__pycache__/
+*.pyc
+backend/csv
+backend/erd
+backend/secrets.json

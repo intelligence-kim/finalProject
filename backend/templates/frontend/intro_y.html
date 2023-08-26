@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intro</title>
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+</head>
+
+<body>
+    <div class="top-container">
+        <div class="top-cinema">
+            <a href="http://127.0.0.1:8000/board/"> <!-- 원하는 URL로 대체하세요 -->
+                <img src="{% static 'img/cinema bot.png' %}" alt="">
+            </a>
+        </div>        
+        <div class="top-question"></div>
+    </div>
+    <div class="chat-container">
+        <!-- 스크롤 부분 -->
+        <div class="message-container">
+            <div class="bot-bubble">
+                <img src="{% static 'img/bot_icon.png' %}" alt="">
+                <div class="message-bubble">
+                    <div class="message-text" style="text-align: left;">
+                        <p>안녕하세요! 시네마 봇입니다.</p>
+                        <p>MBTI만 선택해 주시면 좋아하실만한 영화를 추천해 드릴게요!</p>
+                        <p>나이대별 필터링은 입력창 위의 [영화 필터링] 옵션에서 설정 가능합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MBTI 선택 부분 -->
+            <div class="button-grid">
+                <button class="button" onclick="sendMBTI('ENTJ')">ENTJ</button>
+                <button class="button" onclick="sendMBTI('ENFJ')">ENFJ</button>
+                <button class="button" onclick="sendMBTI('ESTJ')">ESTJ</button>
+                <button class="button" onclick="sendMBTI('ESFJ')">ESFJ</button>
+
+                <button class="button" onclick="sendMBTI('ENTP')">ENTP</button>
+                <button class="button" onclick="sendMBTI('ENFP')">ENFP</button>
+                <button class="button" onclick="sendMBTI('ESTP')">ESTP</button>
+                <button class="button" onclick="sendMBTI('ESFP')">ESFP</button>
+
+                <button class="button" onclick="sendMBTI('INTJ')">INTJ</button>
+                <button class="button" onclick="sendMBTI('INFJ')">INFJ</button>
+                <button class="button" onclick="sendMBTI('ISTJ')">ISTJ</button>
+                <button class="button" onclick="sendMBTI('ISFJ')">ISFJ</button>
+
+                <button class="button" onclick="sendMBTI('INTP')">INTP</button>
+                <button class="button" onclick="sendMBTI('INFP')">INFP</button>
+                <button class="button" onclick="sendMBTI('ISTP')">ISTP</button>
+                <button class="button" onclick="sendMBTI('ISFP')">ISFP</button>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+            <div class="bot-bubble">
+                <img src="{% static 'img/bot_icon.png' %}" alt="">
+                <div class="message-bubble">
+                    <div class="message-text">추천해 드릴게요</div>
+                </div>
+            </div> 
+
+        </div>
+    </div>
+
+    <!-- 추가할 블록 내용 -->
+
+
+    <!-- 채팅 보내는 전송창 -->
+    <!-- <form id="chat-form" method="POST">
+        {% csrf_token %}
+        <input type="text" id="user-message" name="user_message" placeholder="MBTI를 먼저 선택해주세요." disabled />
+        <input type="hidden" name="conversation_id" value="{{ conversation_id }}" />
+        <button type="submit" id="submit-btn" disabled>전송</button>
+    </form> -->
+
+    <!-- 채팅 전송 창 -->
+    <form id="chat-form" method="POST" class="chat-form">
+        {% csrf_token %}
+        <input type="text" id="user-message" name="user_message" placeholder="먼저 MBTI를 선택하세요." disabled class="user-input" />
+        <input type="hidden" name="conversation_id" value="{{ conversation_id }}" />
+        <button type="submit" id="submit-btn" disabled class="submit-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-dots-fill" viewBox="0 0 16 16">
+                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm5 4a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+            </svg>
+        </button>
+    </form>
+
+
+    <!-- JavaScript 코드 -->
+    <script>
+        
+
+    </script> 
+
+</body>
+
+</html>
