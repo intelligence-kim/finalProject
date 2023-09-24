@@ -52,6 +52,7 @@
 
 <img width="534" alt="n" src="https://github.com/intelligence-kim/finalProject/assets/128572870/e6055401-c133-48f0-ab32-74a0728dd8d9"><br>
  - 작품 토픽 네트워크<br>
+ 
 <img width="439" alt="n2" src="https://github.com/intelligence-kim/finalProject/assets/128572870/d8715a57-9377-4e71-ad94-a46e3b15c18e"><br>
  - 성향 토픽 네트워크
 
