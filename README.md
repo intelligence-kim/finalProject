@@ -54,9 +54,16 @@
  - 작품 토픽 네트워크<br>
  
 <img width="439" alt="n2" src="https://github.com/intelligence-kim/finalProject/assets/128572870/d8715a57-9377-4e71-ad94-a46e3b15c18e"><br>
- - 성향 토픽 네트워크
+ - 성향 토픽 네트워크<br>
 
+- 그래프를 구성
+![1](https://github.com/intelligence-kim/finalProject/assets/128572870/7424f422-ed98-484c-81ff-3d1257aeaddd)
+
+- MBTI -> MOVIE까지 도달할 때, 노드 벡터 유사도가 가장 높은 길을 찾는다.
 ![2](https://github.com/intelligence-kim/finalProject/assets/128572870/f1339447-ec9f-45a8-a03f-9e390e85e91a)
+
+- 키워드가 존재할 때, 키워드를 거치는 PATH를 찾고, PATH의 길이의 가중치를 높여서 해당 작품에 도달한다.
+![3](https://github.com/intelligence-kim/finalProject/assets/128572870/f507de73-325b-47b1-8fe0-4aad45bd669e)
 
 
 
