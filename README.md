@@ -48,5 +48,11 @@
    - 질문에 대한 사용자의 답변에서 사전에 준비한 질문지에서 지정한 영화관련 토픽 중 어떤 토픽에 가까운지 분석
 
 ### 네트워크 분석을 통한 추천 시스템
-# 대전제 : 노드 간 path 중 가장 잘 설명되는 path를 찾는다.
+### ***대전제 : 노드 간 path 중 가장 잘 설명되는 path를 찾는다.***
+<img width="534" alt="n" src="https://github.com/intelligence-kim/finalProject/assets/128572870/e6055401-c133-48f0-ab32-74a0728dd8d9">
+- 작품 토픽 네트워크
+<img width="439" alt="n2" src="https://github.com/intelligence-kim/finalProject/assets/128572870/d8715a57-9377-4e71-ad94-a46e3b15c18e">
+- 성향 토픽 네트워크
+
+
 
