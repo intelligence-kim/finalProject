@@ -63,7 +63,7 @@
 ![2](https://github.com/intelligence-kim/finalProject/assets/128572870/f1339447-ec9f-45a8-a03f-9e390e85e91a)
 
 - 키워드가 존재할 때, 키워드를 거치는 PATH를 찾고, PATH의 길이의 가중치를 높여서 해당 작품에 도달한다.
-![3](https://github.com/intelligence-kim/finalProject/assets/128572870/f507de73-325b-47b1-8fe0-4aad45bd669e)
+![3](https://github.com/intelligence-kim/finalProject/assets/128572870/6110b850-36db-4620-af55-2aa83056c3ca)
 
 
 
