@@ -56,5 +56,7 @@
 <img width="439" alt="n2" src="https://github.com/intelligence-kim/finalProject/assets/128572870/d8715a57-9377-4e71-ad94-a46e3b15c18e"><br>
  - 성향 토픽 네트워크
 
+![2](https://github.com/intelligence-kim/finalProject/assets/128572870/f1339447-ec9f-45a8-a03f-9e390e85e91a)
+
 
 
